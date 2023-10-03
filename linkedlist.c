@@ -352,7 +352,7 @@ struct node *count(struct node *head)
 {
     int count = 1;
     ptr = head;
-    while (ptr != NULL)
+    while (ptr->next!= NULL)
     {
         ptr = ptr->next;
         count++;
