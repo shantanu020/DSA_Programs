@@ -164,7 +164,7 @@ struct node *insert_beg(struct node *head)
     newnode = (struct node *)malloc(sizeof(struct node));
     printf("Enter data\n");
     scanf("%d", &newnode->data);
-    newnode->next = ptr->next;
+    newnode->next = ptr;
     head = newnode;
     printf("press 2 to display\n");
     return head;
@@ -351,13 +351,13 @@ struct node *reverse(struct node *head)
 struct node *count(struct node *head)
 {
     int count = 1;
-    ptr=head;
+    ptr = head;
     while (ptr != NULL)
     {
         ptr = ptr->next;
         count++;
     }
-    printf("%d",count);
+    printf("%d", count);
     return head;
 }
 struct node *del(struct node *head)
