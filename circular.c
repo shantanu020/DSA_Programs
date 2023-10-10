@@ -6,15 +6,15 @@ struct node
     struct node *next;
 };
 struct node *head = NULL, *newnode, *ptr, *preptr; // Globally declaring most frequently used variables
-struct node *create(struct node *head);
-struct node *display(struct node *head);
-struct node *insert_beg(struct node *head);
+struct node *create(struct node *head);            //
+struct node *display(struct node *head);           //
+struct node *insert_beg(struct node *head);        //
 struct node *insert_end(struct node *head);
 struct node *insert_before(struct node *head);
 struct node *insert_after(struct node *head);
 struct node *insert_at_pos(struct node *head);
 struct node *del_beg(struct node *head);
-struct node *del_end(struct node *head);
+struct node *del_end(struct node *head); //
 struct node *del_before(struct node *head);
 struct node *del_after(struct node *head);
 struct node *del_at_pos(struct node *head);
@@ -108,7 +108,7 @@ struct node *create(struct node *head)
         printf("Enter data: ");
         newnode = (struct node *)malloc(sizeof(struct node));
         scanf("%d", &newnode->data);
-        newnode->next = NULL;
+        newnode->next = head;
         if (head == NULL)
         {
             head = ptr = newnode;
@@ -130,11 +130,12 @@ struct node *create(struct node *head)
 struct node *display(struct node *head)
 {
     ptr = head;
-    while (ptr != NULL)
+    while (ptr->next != head)
     {
         printf("%d ", ptr->data);
         ptr = ptr->next;
     }
+    printf("%d ", ptr->data);
     printf("\n1.Create linked list\n");
     printf("2.Display linked list\n");
     printf("3.Insert_beg\n");
@@ -164,7 +165,12 @@ struct node *insert_beg(struct node *head)
     newnode = (struct node *)malloc(sizeof(struct node));
     printf("Enter data\n");
     scanf("%d", &newnode->data);
-    newnode->next = ptr;
+    while (ptr->next != head)
+    {
+        ptr = ptr->next;
+    }
+    ptr->next = newnode;
+    newnode->next = head;
     head = newnode;
     printf("press 2 to display\n");
     return head;
@@ -179,8 +185,8 @@ struct node *insert_end(struct node *head)
     newnode = (struct node *)malloc(sizeof(struct node));
     printf("Enter data\n");
     scanf("%d", &newnode->data);
-    newnode->next = NULL;
-    while (ptr->next != NULL)
+    newnode->next = head;
+    while (ptr->next != head)
     {
         ptr = ptr->next;
     }
@@ -264,6 +270,12 @@ struct node *del_beg(struct node *head)
     printf("Press 2 to display\n");
     ptr = head;
     head = ptr->next;
+    while (ptr->next != ptr)
+    {
+        ptr = ptr->next;
+    }
+    ptr->next = head;
+
     free(ptr);
     return head;
 }
@@ -272,12 +284,12 @@ struct node *del_end(struct node *head)
 
     printf("Press 2 to display\n");
     ptr = head;
-    while (ptr->next != NULL)
+    while (ptr->next != head)
     {
         preptr = ptr;
         ptr = ptr->next;
     }
-    preptr->next = NULL;
+    preptr->next = head;
     free(ptr);
     return head;
 }
@@ -336,27 +348,29 @@ struct node *del_at_pos(struct node *head)
 }
 struct node *reverse(struct node *head)
 {
-    struct node *currentnode, *prevnode, *nextnode;
-    prevnode = head;
+    ptr = head;
+    struct node *prevnode, *nextnode, *currentnode;
+    printf("Press 2 to display\n");
+
+    preptr = prevnode = head;
     currentnode = head->next;
-    prevnode->next = 0;
-    while (currentnode != NULL)
+    while (currentnode != head)
     {
         nextnode = currentnode->next;
         currentnode->next = prevnode;
-        // update
+
         prevnode = currentnode;
         currentnode = nextnode;
     }
     head = prevnode;
-    printf("Press 2 to display\n");
+    preptr->next = head;
     return head;
 }
 struct node *count(struct node *head)
 {
     int count = 1;
     ptr = head;
-    while (ptr->next != NULL)
+    while (ptr->next != head)
     {
         ptr = ptr->next;
         count++;
