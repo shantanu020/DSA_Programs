@@ -6,11 +6,13 @@ struct node
     int data;
     struct node *next;
 };
-struct node *head = 0, *newnode, *ptr;
+struct node *head = 0, *newnode, *ptr, *preptr;
 struct node *create(struct node *head);
 struct node *display(struct node *head);
 struct node *insertBeg(struct node *head);
 struct node *insertEnd(struct node *head);
+struct node *delBeg(struct node *head);
+struct node *delEnd(struct node *head);
 
 int main()
 {
@@ -19,7 +21,7 @@ int main()
     do
     {
         printf("Choose options:\n");
-        printf("1.Create\n2.Display\n3.insertBeg\n4.insertEnd\n");
+        printf("1.Create\n2.Display\n3.insertBeg\n4.insertEnd\n5.delBeg\n6.delEnd\n");
         scanf("%d", &option);
 
         switch (option)
@@ -35,6 +37,12 @@ int main()
             break;
         case 4:
             head = insertEnd(head);
+            break;
+        case 5:
+            head = delBeg(head);
+            break;
+        case 6:
+            head = delEnd(head);
             break;
         default:
             printf("Exit\n");
@@ -106,5 +114,25 @@ struct node *insertEnd(struct node *head)
     ptr->next = newnode;
     newnode->prev = ptr;
     newnode->next = 0;
+    return head;
+}
+struct node *delBeg(struct node *head)
+{
+    ptr = head;
+    head = head->next;
+    free(ptr);
+    return head;
+}
+struct node *delEnd(struct node *head)
+{
+    ptr = head;
+    while (ptr->next != 0)
+    {
+        preptr = ptr;
+        ptr = ptr->next;
+    }
+    preptr->next = 0;
+    free(ptr);
+
     return head;
 }
