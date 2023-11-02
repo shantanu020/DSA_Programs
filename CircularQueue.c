@@ -37,7 +37,7 @@ int main()
 }
 void enqueue(int x)
 {
-    if (rear == size - 1)
+    if (front == (rear + 1) % size)
     {
         printf("overflow\n");
     }
@@ -49,7 +49,7 @@ void enqueue(int x)
     }
     else
     {
-        rear++;
+        rear = (rear + 1) % size;
         queue[rear] = x;
     }
 }
@@ -59,13 +59,13 @@ void dequeue()
     {
         printf("Underflow\n");
     }
-    else if (rear == front)
+    else if (front == rear)
     {
         front = rear = -1;
     }
     else
     {
-        front++;
+        front = (front + 1) % size;
         printf("Element deleted\n");
     }
 }
