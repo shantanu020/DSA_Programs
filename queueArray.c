@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include<stdlib.h>
 int x, size = 100, queue[100], rear = -1, front = -1;
 void enqueue(int x);
 void dequeue();
@@ -36,15 +37,15 @@ int main()
 }
 void enqueue(int x)
 {
-    if (rear == -1 && front == -1)
+    if (rear == size - 1)
+    {
+        printf("overflow\n");
+    }
+    else if (rear == -1 && front == -1)
     {
         front = 0;
         rear = 0;
         queue[rear] = x;
-    }
-    else if (rear == size - 1)
-    {
-        printf("overflow\n");
     }
     else
     {
@@ -58,7 +59,7 @@ void dequeue()
     {
         printf("Underflow\n");
     }
-    else
+    else 
     {
         front++;
         printf("Element deleted\n");
@@ -66,7 +67,7 @@ void dequeue()
 }
 void display()
 {
-    if (front == rear == -1)
+    if (front == -1&& rear == -1)
     {
         printf("Queue is empty\n");
     }
